@@ -4,68 +4,68 @@ using UnityEngine.UI;
 
 public class Home : MonoBehaviour
 {
-    [Tooltip("ƒz[ƒ€‰æ–Ê‚Ìƒpƒlƒ‹")]
+    [Tooltip("ãƒ›ãƒ¼ãƒ ç”»é¢ã®ãƒ‘ãƒãƒ«")]
     [SerializeField] private GameObject homePanel;
 
-    [Tooltip("ƒXƒ^[ƒgƒ{ƒ^ƒ“")]
+    [Tooltip("ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³")]
     [SerializeField] private GameObject startButton;
 
-    [Tooltip("‰‹‰ƒ{ƒ^ƒ“")]
+    [Tooltip("åˆç´šãƒœã‚¿ãƒ³")]
     [SerializeField] private GameObject biginner;
-    [Tooltip("’†‹‰ƒ{ƒ^ƒ“")]
+    [Tooltip("ä¸­ç´šãƒœã‚¿ãƒ³")]
     [SerializeField] private GameObject intermediate;
-    [Tooltip("ã‹‰ƒ{ƒ^ƒ“")]
+    [Tooltip("ä¸Šç´šãƒœã‚¿ãƒ³")]
     [SerializeField] private GameObject advanced;
 
-    [Tooltip("ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ÌƒeƒLƒXƒgƒ{ƒbƒNƒX")]
+    [Tooltip("ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹")]
     [SerializeField] private TMP_Text countdownText;
 
-    [Tooltip("ƒQ[ƒ€ƒ}ƒXƒ^[")]
+    [Tooltip("ã‚²ãƒ¼ãƒ ãƒã‚¹ã‚¿ãƒ¼")]
     [SerializeField] private GameMaster gameMaster;
 
-    public float countdownTime = 3.0f; // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ÌŠÔi•bj
-    public float timer = -10f; // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚Ìƒ^ƒCƒ}[
+    public float countdownTime = 3.0f; // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã®æ™‚é–“ï¼ˆç§’ï¼‰
+    public float timer = -10f; // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã®ã‚¿ã‚¤ãƒãƒ¼
     private bool isCountingDown = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // ƒXƒ^[ƒgƒ{ƒ^ƒ“‚ğ—LŒø‚É‚·‚é
+        // ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ã‚’æœ‰åŠ¹ã«ã™ã‚‹
         startButton.SetActive(true);
 
-        // “ïˆÕ“x‘I‘ğƒ{ƒ^ƒ“‚ğ”ñ•\¦‚É‚·‚é
+        // é›£æ˜“åº¦é¸æŠãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤ºã«ã™ã‚‹
         biginner.SetActive(false);
         intermediate.SetActive(false);
         advanced.SetActive(false);
 
-        // ƒJƒEƒ“ƒgƒ_ƒEƒ“ƒeƒLƒXƒg‚ğ”ñ•\¦‚É‚·‚é
+        // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤ºã«ã™ã‚‹
         countdownText.gameObject.SetActive(false);
     }
 
-    // ƒXƒ^[ƒgƒ{ƒ^ƒ“‚ªƒNƒŠƒbƒN‚³‚ê‚½‚Æ‚«‚Ìˆ—
+    // ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã¨ãã®å‡¦ç†
     public void OnStartButtonClicked()
     {
-        // ƒXƒ^[ƒgƒ{ƒ^ƒ“‚ğ”ñ•\¦‚É‚·‚é
+        // ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤ºã«ã™ã‚‹
         startButton.SetActive(false);
 
-        // “ïˆÕ“x‘I‘ğƒ{ƒ^ƒ“‚ğ•\¦‚·‚é
+        // é›£æ˜“åº¦é¸æŠãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹
         biginner.SetActive(true);
         intermediate.SetActive(true);
         advanced.SetActive(true);
     }
 
-    // “ïˆÕ“xƒ{ƒ^ƒ“‚ªƒNƒŠƒbƒN‚³‚ê‚½‚Æ‚«‚Ìˆ—
+    // é›£æ˜“åº¦ãƒœã‚¿ãƒ³ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã¨ãã®å‡¦ç†
     public void OnDifficultyButtonClicked(int difficulty)
     {
-        // ƒQ[ƒ€ƒ}ƒXƒ^[‚É“ïˆÕ“x‚ğİ’è‚·‚é
+        // ã‚²ãƒ¼ãƒ ãƒã‚¹ã‚¿ãƒ¼ã«é›£æ˜“åº¦ã‚’è¨­å®šã™ã‚‹
         gameMaster.difficulty = difficulty;
 
-        Debug.Log($"“ïˆÕ“x {difficulty} ‚ª‘I‘ğ‚³‚ê‚Ü‚µ‚½B");
+        Debug.Log($"é›£æ˜“åº¦ {difficulty} ãŒé¸æŠã•ã‚Œã¾ã—ãŸã€‚");
 
-        // ƒz[ƒ€‰æ–Ê‚ğ”ñ•\¦‚É‚·‚é
+        // ãƒ›ãƒ¼ãƒ ç”»é¢ã‚’éè¡¨ç¤ºã«ã™ã‚‹
         homePanel.SetActive(false);
 
-        // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ğŠJn‚·‚é
+        // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã‚’é–‹å§‹ã™ã‚‹
         countdownText.gameObject.SetActive(true);
         timer = countdownTime;
         isCountingDown = true;
@@ -79,20 +79,20 @@ public class Home : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ªI—¹‚µ‚½‚Æ‚«‚Ìˆ—
-                countdownText.text = "ƒXƒ^[ƒgI";
+                // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ãŒçµ‚äº†ã—ãŸã¨ãã®å‡¦ç†
+                countdownText.text = "ã‚¹ã‚¿ãƒ¼ãƒˆï¼";
 
                 if (timer < -0.5f)
                 {
                     isCountingDown = false;
                     countdownText.gameObject.SetActive(false);
 
-                    gameMaster.StartGame(); // ƒQ[ƒ€‚ğŠJn‚·‚é
+                    gameMaster.StartGame(); // ã‚²ãƒ¼ãƒ ã‚’é–‹å§‹ã™ã‚‹
                 }
             }
             else
             {
-                // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ÌƒeƒLƒXƒg‚ğXV‚·‚é
+                // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°ã™ã‚‹
                 countdownText.text = Mathf.Ceil(timer).ToString();
             }
         }
