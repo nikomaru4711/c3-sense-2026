@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PanelScript : MonoBehaviour
 {
-    [SerializeField] private RectTransform shutterTransform; // ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ÌRectTransform
+    [SerializeField] private RectTransform shutterTransform; // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ã®RectTransform
 
-    private float timeLimit; // §ŒÀŠÔ
-    private float timeElapsed = 0; // Œo‰ßŠÔ
-    private int shutterType; // ƒVƒƒƒbƒ^[‚Ìƒ^ƒCƒv
-    private float sign; // ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ÌˆÚ“®•ûŒü‚ğŒˆ’è‚·‚é‚½‚ß‚Ì•„†
+    private float timeLimit; // åˆ¶é™æ™‚é–“
+    private float timeElapsed = 0; // çµŒéæ™‚é–“
+    private int shutterType; // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ã®ã‚¿ã‚¤ãƒ—
+    private float sign; // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ã®ç§»å‹•æ–¹å‘ã‚’æ±ºå®šã™ã‚‹ãŸã‚ã®ç¬¦å·
 
     public void SetAnswerCharactor(string answerCharactor, float timeLimit, int shutterType, int sign)
     {
@@ -24,7 +24,7 @@ public class PanelScript : MonoBehaviour
 
         this.timeLimit = timeLimit;
         this.shutterType = shutterType;
-        // ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ÌˆÚ“®•ûŒü‚ğŒˆ’è‚·‚é‚½‚ß‚Ì•„†‚ğİ’è
+        // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ã®ç§»å‹•æ–¹å‘ã‚’æ±ºå®šã™ã‚‹ãŸã‚ã®ç¬¦å·ã‚’è¨­å®š
         this.sign = sign;
     }
 
@@ -32,22 +32,22 @@ public class PanelScript : MonoBehaviour
     {
         if (shutterTransform != null)
         {
-            timeElapsed += Time.deltaTime; // Œo‰ßŠÔ‚ğXV
-            float t = timeElapsed / timeLimit; // Œo‰ßŠÔ‚ğ§ŒÀŠÔ‚ÅŠ„‚Á‚Ä0‚©‚ç1‚Ì”ÍˆÍ‚É³‹K‰»
-            // ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ÌˆÊ’u‚ğXV
+            timeElapsed += Time.deltaTime; // çµŒéæ™‚é–“ã‚’æ›´æ–°
+            float t = timeElapsed / timeLimit; // çµŒéæ™‚é–“ã‚’åˆ¶é™æ™‚é–“ã§å‰²ã£ã¦0ã‹ã‚‰1ã®ç¯„å›²ã«æ­£è¦åŒ–
+            // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ã®ä½ç½®ã‚’æ›´æ–°
             float shutterValue = sign * GetShutterValue(t, shutterType);
-            // shutterValue = 0‚Ì‚Æ‚«ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ªŠ®‘S‚É•Â‚¶‚Ä‚¢‚éó‘ÔAshutterValue = 1‚Ì‚Æ‚«Š®‘S‚ÉŠJ‚¢‚Ä‚¢‚éó‘Ô
-            shutterTransform.anchoredPosition = new Vector2(0, shutterValue * 100f); // ƒVƒƒƒbƒ^[ƒpƒlƒ‹‚ÌˆÊ’u‚ğXV
+            // shutterValue = 0ã®ã¨ãã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ãŒå®Œå…¨ã«é–‰ã˜ã¦ã„ã‚‹çŠ¶æ…‹ã€shutterValue = 1ã®ã¨ãå®Œå…¨ã«é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹
+            shutterTransform.anchoredPosition = new Vector2(0, shutterValue * 100f); // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ãƒãƒ«ã®ä½ç½®ã‚’æ›´æ–°
         }
     }
 
 
     float GetShutterValue(float t, int type)
     {
-        return 0f; // ‚±‚Ìs‚ÍÁ‚µ‚ÄAÀÛ‚ÌƒVƒƒƒbƒ^[ƒpƒ^[ƒ“‚ÌŠÖ”‚ğŠ®¬‚³‚¹‚Ä‚­‚¾‚³‚¢
+        return 0f; // ã“ã®è¡Œã¯æ¶ˆã—ã¦ã€å®Ÿéš›ã®ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ãƒ‘ã‚¿ãƒ¼ãƒ³ã®é–¢æ•°ã‚’å®Œæˆã•ã›ã¦ãã ã•ã„
         // ---------------------------------------------
         //
-        // @@@@@@ƒR[ƒhƒ‰ƒCƒeƒBƒ“ƒO
+        // ã€€ã€€ã€€ã€€ã€€ã€€ã‚³ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
         //
         // ---------------------------------------------
     }

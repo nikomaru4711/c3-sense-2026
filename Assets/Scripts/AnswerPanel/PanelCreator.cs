@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class PanelCreator : MonoBehaviour
 {
-    [Header("ƒpƒ‰ƒ[ƒ^‚Ìİ’è")]
-    [Tooltip("ƒpƒlƒ‹‚ÌŠÔŠu")]
+    [Header("ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š")]
+    [Tooltip("ãƒ‘ãƒãƒ«ã®é–“éš”")]
     [SerializeField] private float panelSpacing;
 
-    [Header("ƒvƒŒƒnƒu‚ÌQÆ")]
-    [Tooltip("¶¬‚·‚éƒpƒlƒ‹‚ÌƒvƒŒƒnƒu")]
+    [Header("ãƒ—ãƒ¬ãƒãƒ–ã®å‚ç…§")]
+    [Tooltip("ç”Ÿæˆã™ã‚‹ãƒ‘ãƒãƒ«ã®ãƒ—ãƒ¬ãƒãƒ–")]
     [SerializeField] private GameObject panelPrefab;
-    [Tooltip("ƒvƒ‰ƒX‹L†‚ÌƒvƒŒƒnƒu")]
+    [Tooltip("ãƒ—ãƒ©ã‚¹è¨˜å·ã®ãƒ—ãƒ¬ãƒãƒ–")]
     [SerializeField] private GameObject plusPrefab;
-    [Header("ŠÖ˜A‚·‚éƒXƒNƒŠƒvƒg‚ÌQÆ")]
+    [Header("é–¢é€£ã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å‚ç…§")]
     [SerializeField] private QuestionSetter questionSetter;
     [SerializeField] private GameMaster gameMaster;
 
-    private GameObject[] AnswerPanels; // ¶¬‚³‚ê‚½ƒpƒlƒ‹‚Ì”z—ñ
-    private GameObject[] PlusObjects; // ¶¬‚³‚ê‚½ƒvƒ‰ƒX‹L†‚Ì”z—ñ
+    private GameObject[] AnswerPanels; // ç”Ÿæˆã•ã‚ŒãŸãƒ‘ãƒãƒ«ã®é…åˆ—
+    private GameObject[] PlusObjects; // ç”Ÿæˆã•ã‚ŒãŸãƒ—ãƒ©ã‚¹è¨˜å·ã®é…åˆ—
 
 
-    // –â‘èİ’è‚ÉQuestionSetter‚©‚çŒÄ‚Ño‚³‚ê‚éƒƒ\ƒbƒh
+    // å•é¡Œè¨­å®šæ™‚ã«QuestionSetterã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void CreatePanel(int numbeOfAnswer, string[] AnswerCharactors)
     {
         AnswerPanels = new GameObject[numbeOfAnswer];
@@ -29,15 +29,15 @@ public class PanelCreator : MonoBehaviour
             PanelScript panelScript = AnswerPanels[i].GetComponent<PanelScript>();
             if (panelScript != null)
             {
-                int shutterType = Random.Range(0, gameMaster.difficulty + 1); // ƒVƒƒƒbƒ^[‚Ìí—Ş‚ğƒ‰ƒ“ƒ_ƒ€‚É‘I‘ğ
+                int shutterType = Random.Range(0, gameMaster.difficulty + 1); // ã‚·ãƒ£ãƒƒã‚¿ãƒ¼ã®ç¨®é¡ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«é¸æŠ
                 int sign = 1;
                 if (gameMaster.difficulty != 0)
                 {
-                    // ƒ‰ƒ“ƒ_ƒ€‚É-1‚©1‚ğ‘I‘ğ
+                    // ãƒ©ãƒ³ãƒ€ãƒ ã«-1ã‹1ã‚’é¸æŠ
                     // sign = ???
                     // ---------------------------------
                     //
-                    // @ ƒR[ƒhƒ‰ƒCƒeƒBƒ“ƒO(Advance)
+                    // ã€€ ã‚³ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°(Advance)
                     //
                     // ---------------------------------
                 }
@@ -49,7 +49,7 @@ public class PanelCreator : MonoBehaviour
             }
         }
 
-        // ˆÊ’u‚Ì’²®
+        // ä½ç½®ã®èª¿æ•´
         if (numbeOfAnswer == 1)
         {
             AnswerPanels[0].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;

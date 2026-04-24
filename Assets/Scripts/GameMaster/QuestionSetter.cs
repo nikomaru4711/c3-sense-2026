@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class QuestionSetter : MonoBehaviour
 {
-    [Header("ŠÖ˜A‚·‚éƒXƒNƒŠƒvƒg‚ÌQÆ")]
-    [Tooltip("GameMaster‚ÌQÆ")]
+    [Header("é–¢é€£ã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å‚ç…§")]
+    [Tooltip("GameMasterã®å‚ç…§")]
     [SerializeField] private GameMaster gameMaster;
-    [Tooltip("PanelCreator‚ÌQÆ")]
+    [Tooltip("PanelCreatorã®å‚ç…§")]
     [SerializeField] private PanelCreator panelCreator;
 
     private int difficulty;
-    public int currentQuestionIndex = 0; // Œ»İ‚Ì–â‘è‚ÌƒCƒ“ƒfƒbƒNƒX
-    public int numberOfQuestions; // o‘è‚·‚é–â‘è‚Ì”
-    public float timeLimitPerQuestion; // 1–â‚ ‚½‚è‚Ì§ŒÀŠÔi•bj
-    public int penaltyPoints = 30; // •s³‰ğ‚ÌƒL[‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚ÌŒ¸“_ƒ|ƒCƒ“ƒg
-    public float timeRemaining; // Œ»İ‚Ì–â‘è‚Ìc‚èŠÔi•bj
-    public float currentQuestionScore; // Œ»İ‚Ì–â‘è‚ÌƒXƒRƒA
-    public KeyCode[] CorrectAnswers; // Œ»İ‚Ì–â‘è‚Ì³‰ğ‚ÌƒL[ƒR[ƒh
-    public int lives; // ƒvƒŒƒCƒ„[‚Ìƒ‰ƒCƒt
-    private int[] LivesByDifficulty = { 5, 3, 1 }; // “ïˆÕ“x‚²‚Æ‚Ìƒ‰ƒCƒt”
-    private int[] NumOfQs = { 10, 15, 20 }; // “ïˆÕ“x‚²‚Æ‚Ìo‘è”
-    private float[] TimeLimits = { 10f, 8f, 6f }; // “ïˆÕ“x‚²‚Æ‚Ì§ŒÀŠÔ
+    public int currentQuestionIndex = 0; // ç¾åœ¨ã®å•é¡Œã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+    public int numberOfQuestions; // å‡ºé¡Œã™ã‚‹å•é¡Œã®æ•°
+    public float timeLimitPerQuestion; // 1å•ã‚ãŸã‚Šã®åˆ¶é™æ™‚é–“ï¼ˆç§’ï¼‰
+    public int penaltyPoints = 30; // ä¸æ­£è§£ã®ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã¨ãã®æ¸›ç‚¹ãƒã‚¤ãƒ³ãƒˆ
+    public float timeRemaining; // ç¾åœ¨ã®å•é¡Œã®æ®‹ã‚Šæ™‚é–“ï¼ˆç§’ï¼‰
+    public float currentQuestionScore; // ç¾åœ¨ã®å•é¡Œã®ã‚¹ã‚³ã‚¢
+    public KeyCode[] CorrectAnswers; // ç¾åœ¨ã®å•é¡Œã®æ­£è§£ã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+    public int lives; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ©ã‚¤ãƒ•
+    private int[] LivesByDifficulty = { 5, 3, 1 }; // é›£æ˜“åº¦ã”ã¨ã®ãƒ©ã‚¤ãƒ•æ•°
+    private int[] NumOfQs = { 10, 15, 20 }; // é›£æ˜“åº¦ã”ã¨ã®å‡ºé¡Œæ•°
+    private float[] TimeLimits = { 10f, 8f, 6f }; // é›£æ˜“åº¦ã”ã¨ã®åˆ¶é™æ™‚é–“
 
-    // ”š‚ÆƒAƒ‹ƒtƒ@ƒxƒbƒg‚ÌƒL[ƒR[ƒh‚ÌƒŠƒXƒg
+    // æ•°å­—ã¨ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ãƒªã‚¹ãƒˆ
     private KeyCode[] AnswerKeys = new KeyCode[]
     {
         KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, KeyCode.Alpha0,
@@ -30,40 +30,40 @@ public class QuestionSetter : MonoBehaviour
         KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M
     };
 
-    private bool[] PlayerInputs = new bool[36]; // ƒvƒŒƒCƒ„[‚Ì“ü—Íó‘Ô‚ğŠÇ—‚·‚é”z—ñ
+    private bool[] PlayerInputs = new bool[36]; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹é…åˆ—
 
-    private int minQuestionNumber; // –â‘è”Ô†‚ÌÅ¬’l
-    private int maxQuestionNumber; // –â‘è”Ô†‚ÌÅ‘å’l
+    private int minQuestionNumber; // å•é¡Œç•ªå·ã®æœ€å°å€¤
+    private int maxQuestionNumber; // å•é¡Œç•ªå·ã®æœ€å¤§å€¤
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        difficulty = gameMaster.difficulty; // GameMaster‚©‚ç“ïˆÕ“x‚ğæ“¾
+        difficulty = gameMaster.difficulty; // GameMasterã‹ã‚‰é›£æ˜“åº¦ã‚’å–å¾—
         currentQuestionIndex = 0;
         if (difficulty >= 0 && difficulty < NumOfQs.Length)
         {
-            numberOfQuestions = NumOfQs[difficulty]; // “ïˆÕ“x‚É‰‚¶‚½o‘è”‚ğİ’è
-            timeLimitPerQuestion = TimeLimits[difficulty]; // “ïˆÕ“x‚É‰‚¶‚½§ŒÀŠÔ‚ğİ’è
-            timeRemaining = timeLimitPerQuestion; // Å‰‚Ì–â‘è‚Ìc‚èŠÔ‚ğİ’è
-            lives = LivesByDifficulty[difficulty]; // “ïˆÕ“x‚É‰‚¶‚½ƒ‰ƒCƒt”‚ğİ’è
-            gameMaster.livesRemaining = lives; // GameMaster‚Ìc‚èƒ‰ƒCƒt‚ğİ’è
+            numberOfQuestions = NumOfQs[difficulty]; // é›£æ˜“åº¦ã«å¿œã˜ãŸå‡ºé¡Œæ•°ã‚’è¨­å®š
+            timeLimitPerQuestion = TimeLimits[difficulty]; // é›£æ˜“åº¦ã«å¿œã˜ãŸåˆ¶é™æ™‚é–“ã‚’è¨­å®š
+            timeRemaining = timeLimitPerQuestion; // æœ€åˆã®å•é¡Œã®æ®‹ã‚Šæ™‚é–“ã‚’è¨­å®š
+            lives = LivesByDifficulty[difficulty]; // é›£æ˜“åº¦ã«å¿œã˜ãŸãƒ©ã‚¤ãƒ•æ•°ã‚’è¨­å®š
+            gameMaster.livesRemaining = lives; // GameMasterã®æ®‹ã‚Šãƒ©ã‚¤ãƒ•ã‚’è¨­å®š
 
-            // “ïˆÕ“x‚É‰‚¶‚½o‘è”ÍˆÍ‚ğİ’è
+            // é›£æ˜“åº¦ã«å¿œã˜ãŸå‡ºé¡Œç¯„å›²ã‚’è¨­å®š
             // ---------------------------------------------
             //
-            // @@@@@@ƒR[ƒhƒ‰ƒCƒeƒBƒ“ƒO
+            // ã€€ã€€ã€€ã€€ã€€ã€€ã‚³ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
             //
             // ---------------------------------------------
 
 
-            SetNextQuestion(); // Å‰‚Ì–â‘è‚ğİ’è‚·‚éƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
-            gameMaster.isGameStarted = true; // ƒQ[ƒ€ŠJnƒtƒ‰ƒO‚ğ—§‚Ä‚é
-            Debug.Log($"ƒQ[ƒ€‚ªŠJn‚³‚ê‚Ü‚µ‚½B“ïˆÕ“x: {difficulty}, o‘è”: {numberOfQuestions}, §ŒÀŠÔ: {timeLimitPerQuestion}•b, ƒ‰ƒCƒt: {lives}");
+            SetNextQuestion(); // æœ€åˆã®å•é¡Œã‚’è¨­å®šã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+            gameMaster.isGameStarted = true; // ã‚²ãƒ¼ãƒ é–‹å§‹ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+            Debug.Log($"ã‚²ãƒ¼ãƒ ãŒé–‹å§‹ã•ã‚Œã¾ã—ãŸã€‚é›£æ˜“åº¦: {difficulty}, å‡ºé¡Œæ•°: {numberOfQuestions}, åˆ¶é™æ™‚é–“: {timeLimitPerQuestion}ç§’, ãƒ©ã‚¤ãƒ•: {lives}");
         }
         else
         {
-            Debug.LogError("–³Œø‚È“ïˆÕ“x‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚·B");
+            Debug.LogError("ç„¡åŠ¹ãªé›£æ˜“åº¦ãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã™ã€‚");
             numberOfQuestions = 0;
             timeLimitPerQuestion = 0f;
             timeRemaining = 0f;
@@ -72,40 +72,40 @@ public class QuestionSetter : MonoBehaviour
 
     public void FinishQuestion()
     {
-        panelCreator.DestroyPanel(); // Œ»İ‚Ì–â‘è‚Ìƒpƒlƒ‹‚ğ”j‰ó‚·‚é
+        panelCreator.DestroyPanel(); // ç¾åœ¨ã®å•é¡Œã®ãƒ‘ãƒãƒ«ã‚’ç ´å£Šã™ã‚‹
 
         if (currentQuestionIndex < numberOfQuestions)
         {
-            // Ÿ‚Ì–â‘è‚ğo‘è‚·‚éˆ—‚ğ‚±‚±‚É’Ç‰Á
+            // æ¬¡ã®å•é¡Œã‚’å‡ºé¡Œã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«è¿½åŠ 
             currentQuestionIndex++;
-            timeRemaining = timeLimitPerQuestion; // Ÿ‚Ì–â‘è‚Ìc‚èŠÔ‚ğƒŠƒZƒbƒg
-            SetNextQuestion(); // Ÿ‚Ì–â‘è‚ğİ’è‚·‚éƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
-            Debug.Log($"Ÿ‚Ì–â‘è‚ªo‘è‚³‚ê‚Ü‚µ‚½BŒ»İ‚Ì–â‘èƒCƒ“ƒfƒbƒNƒX: {currentQuestionIndex}");
-            Debug.Log($"Œ»İ‚ÌƒXƒRƒA: {gameMaster.score}");
-            Debug.Log($"c‚èƒ‰ƒCƒt: {gameMaster.livesRemaining}");
+            timeRemaining = timeLimitPerQuestion; // æ¬¡ã®å•é¡Œã®æ®‹ã‚Šæ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆ
+            SetNextQuestion(); // æ¬¡ã®å•é¡Œã‚’è¨­å®šã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
+            Debug.Log($"æ¬¡ã®å•é¡ŒãŒå‡ºé¡Œã•ã‚Œã¾ã—ãŸã€‚ç¾åœ¨ã®å•é¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹: {currentQuestionIndex}");
+            Debug.Log($"ç¾åœ¨ã®ã‚¹ã‚³ã‚¢: {gameMaster.score}");
+            Debug.Log($"æ®‹ã‚Šãƒ©ã‚¤ãƒ•: {gameMaster.livesRemaining}");
         }
         else
         {
-            Debug.Log("‚·‚×‚Ä‚Ì–â‘è‚ªo‘è‚³‚ê‚Ü‚µ‚½B");
-            gameMaster.FinishGame(1); // ƒQ[ƒ€‚ğI—¹‚·‚éƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+            Debug.Log("ã™ã¹ã¦ã®å•é¡ŒãŒå‡ºé¡Œã•ã‚Œã¾ã—ãŸã€‚");
+            gameMaster.FinishGame(1); // ã‚²ãƒ¼ãƒ ã‚’çµ‚äº†ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã³å‡ºã™
         }
     }
 
     public void UpdateScore(float timeRemaining, float questionScore)
     {
-        // ƒXƒRƒA‚ÌXVˆ—
-        int score = (int)(questionScore); // –â‘è‚ÌƒXƒRƒA‚ğ®”‚É•ÏŠ·
-        gameMaster.score += score; // GameMaster‚ÌƒXƒRƒA‚ğXV
-        Debug.Log($"ƒXƒRƒA‚ªXV‚³‚ê‚Ü‚µ‚½BŒ»İ‚ÌƒXƒRƒA: {gameMaster.score}");
+        // ã‚¹ã‚³ã‚¢ã®æ›´æ–°å‡¦ç†
+        int score = (int)(questionScore); // å•é¡Œã®ã‚¹ã‚³ã‚¢ã‚’æ•´æ•°ã«å¤‰æ›
+        gameMaster.score += score; // GameMasterã®ã‚¹ã‚³ã‚¢ã‚’æ›´æ–°
+        Debug.Log($"ã‚¹ã‚³ã‚¢ãŒæ›´æ–°ã•ã‚Œã¾ã—ãŸã€‚ç¾åœ¨ã®ã‚¹ã‚³ã‚¢: {gameMaster.score}");
     }
 
     public void CheckAnswer()
     {
-        // ƒvƒŒƒCƒ„[‚Ì“ü—Í‚ª•Ï‰»‚µ‚½‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
-        // V‚µ‚­‰Ÿ‚³‚ê‚½ƒL[‚ª•s³‰ğ‚Ìê‡AƒXƒRƒA‚ğŒ¸“_‚·‚é
-        // Š®‘Sˆê’v‚Ìê‡³‰ğ‚Æ‚·‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥åŠ›ãŒå¤‰åŒ–ã—ãŸã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
+        // æ–°ã—ãæŠ¼ã•ã‚ŒãŸã‚­ãƒ¼ãŒä¸æ­£è§£ã®å ´åˆã€ã‚¹ã‚³ã‚¢ã‚’æ¸›ç‚¹ã™ã‚‹
+        // å®Œå…¨ä¸€è‡´ã®å ´åˆæ­£è§£ã¨ã™ã‚‹
 
-        int correctInputCount = 0; // ƒvƒŒƒCƒ„[‚ª³‰ğ‚ÌƒL[‚ğ‰Ÿ‚µ‚½ŒÂ”
+        int correctInputCount = 0; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ­£è§£ã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸå€‹æ•°
 
         for (int i = 0; i < AnswerKeys.Length; i++)
         {
@@ -113,58 +113,58 @@ public class QuestionSetter : MonoBehaviour
             {
                 if (System.Array.Exists(CorrectAnswers, key => key == AnswerKeys[i]))
                 {
-                    correctInputCount++; // ƒvƒŒƒCƒ„[‚ª³‰ğ‚ÌƒL[‚ğ‰Ÿ‚µ‚½ŒÂ”‚ğ‘‚â‚·
+                    correctInputCount++; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ­£è§£ã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸå€‹æ•°ã‚’å¢—ã‚„ã™
                 }
 
                 if (!PlayerInputs[i])
                 {
                     if (!System.Array.Exists(CorrectAnswers, key => key == AnswerKeys[i]))
                     {
-                        gameMaster.score = Mathf.Max(0, gameMaster.score - penaltyPoints); // •s³‰ğ‚ÌƒL[‚ª‰Ÿ‚³‚ê‚½ê‡‚ÍƒXƒRƒA‚ğŒ¸“_iÅ’á0“_‚Ü‚Åj
-                        Debug.Log($"•s³‰ğ‚ÌƒL[‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½: {AnswerKeys[i]}. ƒXƒRƒA‚ªŒ¸“_‚³‚ê‚Ü‚µ‚½BŒ»İ‚ÌƒXƒRƒA: {gameMaster.score}");
+                        gameMaster.score = Mathf.Max(0, gameMaster.score - penaltyPoints); // ä¸æ­£è§£ã®ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸå ´åˆã¯ã‚¹ã‚³ã‚¢ã‚’æ¸›ç‚¹ï¼ˆæœ€ä½0ç‚¹ã¾ã§ï¼‰
+                        Debug.Log($"ä¸æ­£è§£ã®ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¾ã—ãŸ: {AnswerKeys[i]}. ã‚¹ã‚³ã‚¢ãŒæ¸›ç‚¹ã•ã‚Œã¾ã—ãŸã€‚ç¾åœ¨ã®ã‚¹ã‚³ã‚¢: {gameMaster.score}");
                     }
 
-                    PlayerInputs[i] = true; // ƒvƒŒƒCƒ„[‚Ì“ü—Íó‘Ô‚ğXV
+                    PlayerInputs[i] = true; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’æ›´æ–°
                 }
             }
             else if (PlayerInputs[i])
             {
-                PlayerInputs[i] = false; // ƒvƒŒƒCƒ„[‚Ì“ü—Íó‘Ô‚ğXV
+                PlayerInputs[i] = false; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’æ›´æ–°
             }
         }
 
         if (correctInputCount == CorrectAnswers.Length)
         {
-            // ƒvƒŒƒCƒ„[‚ª‚·‚×‚Ä‚Ì³‰ğ‚ÌƒL[‚ğ‰Ÿ‚µ‚½ê‡‚Í³‰ğ‚Æ‚·‚é
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã™ã¹ã¦ã®æ­£è§£ã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸå ´åˆã¯æ­£è§£ã¨ã™ã‚‹
             int numberOfCorrectAnswers = CorrectAnswers.Length;
 
-            UpdateScore(timeRemaining, 100f); // ³‰ğ‚Ìê‡‚ÍƒXƒRƒA‚ğ‰ÁZ
-            Debug.Log("³‰ğ‚Å‚·I");
-            FinishQuestion(); // Ÿ‚Ì–â‘è‚ğİ’è‚·‚é
+            UpdateScore(timeRemaining, 100f); // æ­£è§£ã®å ´åˆã¯ã‚¹ã‚³ã‚¢ã‚’åŠ ç®—
+            Debug.Log("æ­£è§£ã§ã™ï¼");
+            FinishQuestion(); // æ¬¡ã®å•é¡Œã‚’è¨­å®šã™ã‚‹
         }
     }
 
     public void SetNextQuestion()
     {
-        // w’è‚Ì–â‘è”Ô†“à‚Åƒ‰ƒ“ƒ_ƒ€‚É³‰ğ‚ğİ’è
-        // ³‰ğ‚ªd•¡‚µ‚È‚¢‚æ‚¤‚É‚·‚é
-        // ³‰ğ‚Ì”‚ğƒ‰ƒ“ƒ_ƒ€‚ÉŒˆ’èi“ïˆÕ“x‚É‰‚¶‚Ä1`difficulty+1j
+        // æŒ‡å®šã®å•é¡Œç•ªå·å†…ã§ãƒ©ãƒ³ãƒ€ãƒ ã«æ­£è§£ã‚’è¨­å®š
+        // æ­£è§£ãŒé‡è¤‡ã—ãªã„ã‚ˆã†ã«ã™ã‚‹
+        // æ­£è§£ã®æ•°ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«æ±ºå®šï¼ˆé›£æ˜“åº¦ã«å¿œã˜ã¦1ï½difficulty+1ï¼‰
         // ---------------------------------------------
         //
-        // @@@@@@ƒR[ƒhƒ‰ƒCƒeƒBƒ“ƒO
+        // ã€€ã€€ã€€ã€€ã€€ã€€ã‚³ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
         //
         // ---------------------------------------------
 
 
-        // PanelCreator‚É³‰ğ‚Ì•¶š‚ğ“n‚µ‚Äƒpƒlƒ‹‚ğ¶¬‚·‚é
+        // PanelCreatorã«æ­£è§£ã®æ–‡å­—ã‚’æ¸¡ã—ã¦ãƒ‘ãƒãƒ«ã‚’ç”Ÿæˆã™ã‚‹
         string[] answerCharactors = new string[CorrectAnswers.Length];
         for (int i = 0; i < CorrectAnswers.Length; i++)
         {
-            answerCharactors[i] = CorrectAnswers[i].ToString().Replace("Alpha", ""); // KeyCode‚©‚ç"Alpha"‚ğæ‚èœ‚¢‚Ä•¶š‚ğæ“¾
+            answerCharactors[i] = CorrectAnswers[i].ToString().Replace("Alpha", ""); // KeyCodeã‹ã‚‰"Alpha"ã‚’å–ã‚Šé™¤ã„ã¦æ–‡å­—ã‚’å–å¾—
         }
         panelCreator.CreatePanel(CorrectAnswers.Length, answerCharactors);
 
-        // Ÿ‚Ì–â‘è‚Ì“à—e‚ğƒRƒ“ƒ\[ƒ‹‚É•\¦‚·‚é
-        Debug.Log($"Ÿ‚Ì–â‘è‚ªİ’è‚³‚ê‚Ü‚µ‚½B³‰ğ‚ÌƒL[ƒR[ƒh: {string.Join(", ", CorrectAnswers)}");
+        // æ¬¡ã®å•é¡Œã®å†…å®¹ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«è¡¨ç¤ºã™ã‚‹
+        Debug.Log($"æ¬¡ã®å•é¡ŒãŒè¨­å®šã•ã‚Œã¾ã—ãŸã€‚æ­£è§£ã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰: {string.Join(", ", CorrectAnswers)}");
     }
 }
